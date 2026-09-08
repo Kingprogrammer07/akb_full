@@ -37,11 +37,12 @@ Custom history-based routing — **not** React Router components. `App.tsx` main
 
 ### API Layer (`src/api/`)
 
-All HTTP via Axios (`src/api/apiClient.ts`) with interceptors that:
-- Attach `Authorization: Bearer <token>` header
-- Attach Telegram `initData` header
-- Attach `Accept-Language` from i18next
-- On 401/403: clear session, dispatch logout event
+All HTTP via Axios (`src/api/client.ts`), which exports two instances: `apiClient` (JSON, 30s timeout) and `apiClientFormData` (multipart, 60s). Request interceptors:
+- Attach Telegram `initData` as `X-Telegram-Init-Data`
+- Attach **exactly one** auth header — admin JWT from `localStorage` as `X-Admin-Authorization`, otherwise the user token from `sessionStorage` as `Authorization`. Sending both makes user-auth middleware intercept the admin JWT and 401.
+- Attach `Accept-Language` from i18next (default `uz`)
+
+Response interceptor: on **401** clears both storages and dispatches the `auth:logout` event, except for the silent-401 endpoints (`/admin/auth/refresh`, `GET /flight-schedule`). Other errors are rejected as `{message, status, data}`, where `message` is an Uzbek string — hardcoded for auth/infra statuses, taken from the backend `detail` for 400/409/422.
 
 Domain services live in `src/api/services/` (auth, cargo, flights, payments, stats, admin, etc.).
 
