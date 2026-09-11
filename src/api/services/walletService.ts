@@ -103,7 +103,7 @@ export const walletService = {
 
     // Active Card (for debt payment)
     getActiveCompanyCard: async (): Promise<ActiveCardResponse> => {
-        const response = await apiClient.get<ActiveCardResponse>('/api/v1/payments/active-cards/random');
+        const response = await apiClient.get<ActiveCardResponse>('/api/v1/wallet/company-card');
         return response.data;
     }
 };
