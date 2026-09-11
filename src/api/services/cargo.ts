@@ -460,7 +460,7 @@ export const getClientFlightDetails = async (
   size: number = 20
 ): Promise<ClientFlightDetailResponse> => {
   const response = await apiClient.get<ClientFlightDetailResponse>(
-    `/api/v1/cargo/history/${clientCode}/flights/${flightName}`,
+    `/api/v1/cargo/history/${clientCode}/flights/${encodeURIComponent(flightName)}`,
     {
       params: { page, size }
     }
