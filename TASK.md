@@ -1,13 +1,13 @@
 # Objective
 
-Add an iOS-friendly hard refresh action to the Warehouse page header.
+Fix client edit form validation so existing AKB client codes with hyphens remain valid.
 
 # Implementation Plan
 
-- [x] Add a reload handler in `WarehousePage`.
-- [x] Make the visible "Ombor" title tappable without changing layout.
-- [x] Run targeted frontend verification.
+- [x] Allow `-` in the client code Zod validation.
+- [x] Preserve `-` while normalizing client code input.
+- [x] Run targeted validation checks and a frontend build.
 
 # Walkthrough / Architecture
 
-The Warehouse page is a single-page route, but iOS standalone/PWA mode does not provide the normal browser refresh affordance. The header title will trigger a full document navigation with a timestamp query parameter so the page reloads from the app shell instead of only resetting React state.
+`ClientForm` powers both `/client/add` and `/client/edit/:id`. The backend accepts and stores hyphenated AKB codes such as `A12-4`, but the frontend schema and input normalizer currently reject or strip `-`, causing valid existing client codes to appear invalid in edit mode.
