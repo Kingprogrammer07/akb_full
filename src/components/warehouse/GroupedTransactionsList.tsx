@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { ClientGroup } from "../../api/services/warehouse";
 import { formatCurrencySum } from "../../lib/format";
+import FlightMaskBadge from "./FlightMaskBadge";
 
 // ── Status Styling ────────────────────────────────────────────────────────────
 
@@ -234,7 +235,10 @@ export default function GroupedTransactionsList({
                                 <Plane className="w-6 h-6 text-orange-500 dark:text-orange-400" strokeWidth={1.5} />
                               </div>
                               <div>
-                                <h4 className="text-[15px] font-bold text-gray-900 dark:text-white tracking-tight">{flight.flight_name}</h4>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <h4 className="text-[15px] font-bold text-gray-900 dark:text-white tracking-tight">{flight.flight_name}</h4>
+                                  <FlightMaskBadge flightName={flight.flight_name} flightMask={flight.flight_mask} />
+                                </div>
                                 <div className="flex items-center gap-2 text-[12px] font-medium text-gray-500 dark:text-gray-400 mt-1">
                                   <span className="bg-gray-100 dark:bg-white/[0.06] px-2 py-0.5 rounded-md">{flight.transactions.length} ta yuk</span>
                                   <span className="text-gray-300 dark:text-gray-700">•</span>

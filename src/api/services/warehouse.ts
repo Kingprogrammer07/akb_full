@@ -40,6 +40,8 @@ export interface WarehouseTransactionItem {
   client_full_name: string | null;
   client_phone: string | null;
   reys: string;
+  /** Partner mask the client sees for this flight; null when not masked. */
+  flight_mask?: string | null;
   qator_raqami: number;
   vazn: string;
   total_amount: number | null;
@@ -91,6 +93,8 @@ export interface WarehouseActivityItem {
   transaction_id: number;
   client_code: string;
   flight_name: string;
+  /** Partner mask the client sees for this flight; null when not masked. */
+  flight_mask?: string | null;
   total_amount: number | null;
   paid_amount: number;
   remaining_amount: number;
@@ -169,6 +173,8 @@ export interface GroupedTransactionItem {
 
 export interface FlightGroup {
   flight_name: string;
+  /** Partner mask the client sees for this flight; null when not masked. */
+  flight_mask?: string | null;
   total_weight_kg: number;
   total_amount: number;
   total_remaining_amount: number;

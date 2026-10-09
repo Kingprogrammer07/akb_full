@@ -89,7 +89,7 @@ export default function WarehouseFilters() {
             value={flightName}
             onChange={(e) => setFlightName(e.target.value.toUpperCase())}
             onFocus={() => recentFlights.length > 0 && setShowFlightDropdown(true)}
-            placeholder="Reys nomini kiriting (masalan: CH123)"
+            placeholder="Reys yoki maska nomi (masalan: CH123)"
             className="w-full pl-9 pr-8 py-2.5 bg-white dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] rounded-xl text-[13px] font-bold text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 transition-all"
           />
           {recentFlights.length > 0 && (

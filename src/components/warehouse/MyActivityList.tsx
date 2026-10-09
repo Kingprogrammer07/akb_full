@@ -11,6 +11,7 @@ import {
 import { useMyActivity } from "../../api/hooks/useWarehouse";
 import { DELIVERY_METHOD_LABELS } from "../../schemas/warehouseSchemas";
 import { formatCurrencySum, formatTashkentDateTime } from "../../lib/format";
+import FlightMaskBadge from "./FlightMaskBadge";
 
 // ── Payment badge ─────────────────────────────────────────────────────────────
 
@@ -206,6 +207,11 @@ export default function MyActivityList({ page, onPageChange }: MyActivityListPro
                         <Plane className="w-3 h-3 shrink-0" strokeWidth={1.8} />
                         {item.flight_name}
                       </span>
+                      <FlightMaskBadge
+                        flightName={item.flight_name}
+                        flightMask={item.flight_mask}
+                        className="text-[10px] px-1.5"
+                      />
                     </div>
                     <p className="text-[10px] text-gray-400 dark:text-gray-600 mt-0.5">
                       {formatTashkentDateTime(item.created_at)}
