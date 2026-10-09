@@ -103,7 +103,25 @@ export const walletService = {
 
     // Active Card (for debt payment)
     getActiveCompanyCard: async (): Promise<ActiveCardResponse> => {
-        const response = await apiClient.get<ActiveCardResponse>('/api/v1/payments/active-cards/random');
-        return response.data;
+        try {
+            const response = await apiClient.get<ActiveCardResponse>('/api/v1/wallet/company-card');
+            return response.data;
+        } catch (error) {
+            // Backends released before /wallet/company-card answer it with a route 404 and
+            // still serve the card unauthenticated at /payments/active-cards/random; newer
+            // backends require an admin JWT there, so no other failure may fall back.
+            // Remove once every deployed backend has /wallet/company-card.
+            const { status, data } = (error ?? {}) as {
+                status?: number;
+                data?: { detail?: unknown };
+            };
+            // Only FastAPI's missing-route body falls back. Any other 404 (no active
+            // card, user not found) is a real answer from a backend that has the route.
+            if (status !== 404 || data?.detail !== 'Not Found') {
+                throw error;
+            }
+            const response = await apiClient.get<ActiveCardResponse>('/api/v1/payments/active-cards/random');
+            return response.data;
+        }
     }
 };
